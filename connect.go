@@ -68,7 +68,6 @@ func now() (string, uint32) {
 // when used in server side(unpack), nothing needed to be initialized.
 // unpack will fill the SourceAddr(SrcAddr), AuthSrc, Version, Timestamp
 // and SeqId
-//
 type CmppConnReqPkt struct {
 	SrcAddr   string
 	AuthSrc   string
@@ -85,7 +84,6 @@ type CmppConnReqPkt struct {
 //
 // when used in client side(unpack), nothing needed to be initialized.
 // unpack will fill the Status, AuthImsg, Version and SeqId
-//
 type Cmpp2ConnRspPkt struct {
 	Status   uint8
 	AuthIsmg string
@@ -102,7 +100,6 @@ type Cmpp2ConnRspPkt struct {
 //
 // when used in client side(unpack), nothing needed to be initialized.
 // unpack will fill the Status, AuthImsg, Version and SeqId
-//
 type Cmpp3ConnRspPkt struct {
 	Status   uint32
 	AuthIsmg string
@@ -135,7 +132,7 @@ func (p *CmppConnReqPkt) Pack(seqId uint32) ([]byte, error) {
 	srcAddr := cmpputils.OctetString(p.SrcAddr, 6)
 	w.WriteString(srcAddr)
 
-	md5 := md5.Sum(bytes.Join([][]byte{[]byte(srcAddr),
+	md5 := md5.Sum(bytes.Join([][]byte{[]byte(p.SrcAddr),
 		make([]byte, 9),
 		[]byte(p.Secret),
 		[]byte(ts)},
